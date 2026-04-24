@@ -110,5 +110,4 @@ class Time
 
 class Venue
 {
-    Name
 }
