@@ -24,7 +24,7 @@ class Event
 class Venue
 {
     String Name, Type;
-    ArrayListM<MyDate>
+    ArrayList<MyDate> Dates = new ArrayList<MyDate>();
     Venue(String Name, String Type)
     {
         this.Name = Name;
