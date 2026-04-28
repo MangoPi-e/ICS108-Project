@@ -1,4 +1,5 @@
 /*This file includes the Menu abstract class with its children (Aka all menus)*/
+import java.util.InputMismatchException;
 import java.util.Scanner;
 public abstract class Menu
 {
@@ -58,7 +59,142 @@ public abstract class Menu
     }
 }
 
+class NameBox extends Menu
+{
+    NameBox(String Name)
+    {
+        super(Name);
+    }
 
+    @Override
+    public void start(Menu prev)
+    {
+
+    }
+
+    public String validate() {
+        //input validation
+        String Name = "";
+        boolean Flag = true;
+        while (Flag) {
+            try {
+                System.out.print("\nName : ");
+                Name = reader.next();
+            } catch (Exception e) {
+                System.out.println("Invalid Input!!!!");
+                System.out.print("Try Again : \n||| ");
+            }
+        }
+        return Name;}
+}
+
+class TimeBox extends Menu
+{
+    TimeBox(String Name)
+    {
+        super(Name);
+    }
+
+    @Override
+    public void start(Menu prev)
+    {
+
+    }
+
+    public Time validate()
+    {
+        //input validation
+        int minutes=0, hours=0;
+        boolean Flag = true;
+        while(Flag)
+        {
+            try
+            {
+                System.out.print("\nHours : ");
+                hours = reader.nextInt();
+                if (hours > 24 || hours < 0){throw new InputMismatchException();}
+            }catch (Exception e)
+            {
+                System.out.println("Invalid Input!!!!");
+                System.out.print("Try Again : \n||| ");
+            }
+        }
+        Flag = true;
+        while(Flag)
+        {
+            try
+            {
+                System.out.print("\nMinutes : ");
+                minutes = reader.nextInt();
+                if (minutes > 60 || minutes < 0){throw new InputMismatchException();}
+            }catch (Exception e)
+            {
+                System.out.println("Invalid Input!!!!");
+                System.out.print("Try Again : \n||| ");
+            }
+        }
+        return new Time(hours, minutes);
+    }
+}
+class DateBox extends Menu
+{
+    DateBox(String Name)
+    {
+        super(Name);
+    }
+
+    @Override
+    public void start(Menu prev)
+    {
+
+    }
+
+    public MyDate validate() {
+        //input validation
+        int Year = 0, Month = 0, Day = 0;
+        boolean Flag = true;
+        while (Flag) {
+            try {
+                System.out.print("\nYear : ");
+                Year = reader.nextInt();
+                if (Year > 2026 || Year < 0) {
+                    throw new InputMismatchException();
+                }
+            } catch (Exception e) {
+                System.out.println("Invalid Input!!!!");
+                System.out.print("Try Again : \n||| ");
+            }
+        }
+        Flag = true;
+        while (Flag) {
+            try {
+                System.out.print("\nMonth : ");
+                Month = reader.nextInt();
+                if (Month > 12 || Month <= 0) {
+                    throw new InputMismatchException();
+                }
+            } catch (Exception e) {
+                System.out.println("Invalid Input!!!!");
+                System.out.print("Try Again : \n||| ");
+            }
+        }
+
+        Flag = true;
+        while (Flag) {
+            try {
+                System.out.print("\nDay : ");
+                Day = reader.nextInt();
+                if (Day > MyDate.MaxDays(Year, Month) || Day <= 0) {
+                    throw new InputMismatchException();
+                }
+            } catch (Exception e) {
+                System.out.println("Invalid Input!!!!");
+                System.out.print("Try Again : \n||| ");
+            }
+        }
+        return new MyDate(Day, Month, Year);
+    }
+}
 
 class AddEvent extends Menu
 {
@@ -71,7 +207,5 @@ class AddEvent extends Menu
     public void start(Menu Prev)
     {
         view();
-        System.out.print("Enter Your choice : \n||| ");
-        super.GetInput();
     }
 }

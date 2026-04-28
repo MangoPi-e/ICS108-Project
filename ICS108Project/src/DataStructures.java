@@ -5,10 +5,10 @@ public class DataStructures
 class Event
 {//initiating the class properties
     String Name;
-    Date StartingDate, EndDate;
+    MyDate StartingDate, EndDate;
     Time time;
     Venue venue;
-    public Event(String name, Date startingDate, Date endDate, Time time, Venue venue)
+    public Event(String name, MyDate startingDate, MyDate endDate, Time time, Venue venue)
     {
         this.Name = name;
         this.StartingDate = startingDate;
@@ -28,18 +28,19 @@ class Venue
     }
 }
 
-class Date
+class MyDate
 {
     int day, month, year;
-    public Date(int day, int month, int year)
+    public MyDate(int day, int month, int year)
     {
         this.day = day;
         this.month = month;
         this.year = year;
     }
 
-    static int  validateDays(int year, int month)
+    static int  MaxDays(int year, int month)
         {
+            int[] DaysPerMonth = {31, -1, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
             if (month == 2)
             {
                 if (year%400 == 0){return 29;}
@@ -47,8 +48,7 @@ class Date
                 if (year%4 == 0){return 29;}
                 return 28;
             }
-            else if(month%2 == 0)
-            {return }
+            else{return DaysPerMonth[month-1];}
         }
 
     public int getDay() {return day;}
@@ -69,13 +69,12 @@ class Date
 
 class Time
 {
-    int hours, minutes, seconds;
+    int hours, minutes;
 
-    public Time(int hours, int minutes, int seconds)
+    public Time(int hours, int minutes)
     {
         this.hours = hours;
         this.minutes = minutes;
-        this.seconds = seconds;
     }
 
     public int getHours() {return hours;}
@@ -84,12 +83,9 @@ class Time
     public int getMinutes() {return minutes;}
     public void setMinutes(int minutes) {this.minutes = minutes;}
 
-    public int getSeconds() {return seconds;}
-    public void setSeconds(int seconds) {this.seconds = seconds;}
-
     @Override
     public String toString()
     {
-        return hours + ":" + minutes + ":" + seconds;
+        return hours + ":" + minutes;
     }
 }
