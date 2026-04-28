@@ -1,38 +1,14 @@
 public class Main{
     public static void main(String[] args)
     {
-        MenuManager.CurrentMenu = new Menu("Start Menu");
         MenuManager.ViewMenu();
     }
 }
 
 
-abstract class MenuManager
-{
-    public static Menu CurrentMenu;
-    public static void ViewMenu()
-    {
-        System.out.println(CurrentMenu.MenuName + " : ");
-        if (CurrentMenu.SelectionPool != null)
-        {
-        for(int i=0; i<CurrentMenu.SelectionPool.length; i++)
-        {
-            System.out.println(i + " :\n\t" + CurrentMenu.SelectionPool[i]);
-        }
-        }
-    }
-}
 
-abstract class Menu
-{
-    String MenuName;
-    Menu[] SelectionPool;
 
-    public Menu(String Name)
-    {
-        this.MenuName = Name;
-    }
-}
+
 
 
 
@@ -106,8 +82,4 @@ class Time
     {
         return hours + ":" + minutes + ":" + seconds;
     }
-}
-
-class Venue
-{
 }
