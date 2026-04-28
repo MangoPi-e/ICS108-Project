@@ -29,17 +29,16 @@ public abstract class Menu
                 {
                     Flag = false;
                 }
-            }catch (Exception e){System.out.println("Invalid Input!!!!");}
+            }catch (Exception e)
+            {
+                System.out.println("Invalid Input!!!!");
+                System.out.print("Try Again : \n||| ");
+            }
         }
         return Choice;
     }
 
-    public void start(Menu Prev)
-    {
-        //Move to next Menu/instruction after confirmation
-        int Choice = GetInput();
-        //if(confirm()){SelectionPool[Choice].start();}
-    }
+    abstract public void start(Menu Prev);//Move to next Menu/instruction after confirmation
 
     public boolean confirm()
     {
@@ -71,6 +70,8 @@ class AddEvent extends Menu
     @Override
     public void start(Menu Prev)
     {
-        super.start(Prev);
+        view();
+        System.out.print("Enter Your choice : \n||| ");
+        super.GetInput();
     }
 }
