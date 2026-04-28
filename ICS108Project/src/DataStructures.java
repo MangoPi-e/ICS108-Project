@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.TreeMap;
+
 public class DataStructures
 {
 }
@@ -21,6 +24,7 @@ class Event
 class Venue
 {
     String Name, Type;
+    ArrayListM<MyDate>
     Venue(String Name, String Type)
     {
         this.Name = Name;
@@ -28,14 +32,15 @@ class Venue
     }
 }
 
-class MyDate
+class MyDate implements Comparable<MyDate>
 {
-    int day, month, year;
+    int day, month, year, noDate;
     public MyDate(int day, int month, int year)
     {
         this.day = day;
         this.month = month;
         this.year = year;
+        this.noDate = day + (month*100) + (year*10000);
     }
 
     static int  MaxDays(int year, int month)
@@ -52,18 +57,23 @@ class MyDate
         }
 
     public int getDay() {return day;}
-    public void setDay(int day) {this.day = day;}
+    public void setDay(int day) {this.day = day;this.noDate = day + (month*100) + (year*10000);}
 
     public int getMonth() {return month;}
-    public void setMonth(int month) {this.month = month;}
+    public void setMonth(int month) {this.month = month;this.noDate = day + (month*100) + (year*10000);}
 
     public int getYear() {return year;}
-    public void setYear(int year) {this.year = year;}
+    public void setYear(int year) {this.year = year;this.noDate = day + (month*100) + (year*10000);}
 
     @Override
     public String toString()
     {
         return day + "/" + month + "/" + year;
+    }
+    @Override
+    public int compareTo(MyDate other)
+    {
+        return this.noDate - other.noDate;
     }
 }
 

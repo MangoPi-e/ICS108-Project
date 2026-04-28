@@ -126,7 +126,7 @@ class TimeBox extends Menu
             {
                 System.out.print("\nMinutes : ");
                 minutes = reader.nextInt();
-                if (minutes > 60 || minutes < 0){throw new InputMismatchException();}
+                if (minutes > 59 || minutes < 0){throw new InputMismatchException();}
             }catch (Exception e)
             {
                 System.out.println("Invalid Input!!!!");
@@ -196,11 +196,39 @@ class DateBox extends Menu
     }
 }
 
+class DateInterval extends DateBox
+{
+    DateInterval(String Name)
+    {
+        super(Name);
+    }
+
+    @Override
+    public void start(Menu prev)
+    {
+        boolean Flag2 = true;
+        while (Flag2)
+        {
+            try
+            {
+            MyDate Start = validate();
+            MyDate End = validate();
+            if (Start.compareTo(End)>0){throw new Exception("Invalid Date Interval");}
+            }
+            catch (Exception e) {
+            System.out.println("Invalid Input "+ e +"!!!!");
+            System.out.print("Try Again : \n||| ");
+            }
+        }
+    }
+}
+
 class AddEvent extends Menu
 {
     AddEvent()
     {
         super("Add Event");
+        SelectionPool = new Menu[]{new NameBox("Event Name"), new DateInterval("Start/End Date"), new TimeBox("Time") new NameBox(Venue)};
     }
 
     @Override
