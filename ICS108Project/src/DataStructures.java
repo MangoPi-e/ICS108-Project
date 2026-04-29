@@ -1,22 +1,26 @@
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.TreeMap;
 
 public class DataStructures
 {
+    public static String[] EventTypes = {"Sports", "Social", "Religious", "Academic"};
+    public static String[] VenueTypes = {"Sports area", "Lecture hall", "Conference hall", "Public space"};
 }
 
 class Event
 {//initiating the class properties
-    String Name;
+    String Name, Type;
     MyDate StartingDate, EndDate;
     Time time;
     Venue venue;
-    public Event(String name, MyDate startingDate, MyDate endDate, Time time, Venue venue)
+    public Event(String name, MyDate startingDate, MyDate endDate, Time time, int TypeIndex, Venue venue)
     {
         this.Name = name;
         this.StartingDate = startingDate;
         this.EndDate = endDate;
         this.time = time;
+        this.Type = DataStructures.EventTypes[TypeIndex];
         this.venue = venue;
     }
 }
@@ -25,10 +29,10 @@ class Venue
 {
     String Name, Type;
     ArrayList<MyDate> Dates = new ArrayList<MyDate>();
-    Venue(String Name, String Type)
+    Venue(String Name, int TypeIndex)
     {
         this.Name = Name;
-        this.Type = Type;
+        this.Type = DataStructures.VenueTypes[TypeIndex];
     }
 }
 

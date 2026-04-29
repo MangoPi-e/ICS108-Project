@@ -69,7 +69,6 @@ class NameBox extends Menu
     @Override
     public void start(Menu prev)
     {
-
     }
 
     public String validate() {
@@ -87,7 +86,6 @@ class NameBox extends Menu
         }
         return Name;}
 }
-
 class TimeBox extends Menu
 {
     TimeBox(String Name)
@@ -195,7 +193,6 @@ class DateBox extends Menu
         return new MyDate(Day, Month, Year);
     }
 }
-
 class DateInterval extends DateBox
 {
     DateInterval(String Name)
@@ -222,13 +219,48 @@ class DateInterval extends DateBox
         }
     }
 }
+class EventTypeBox extends Menu
+{
+    String[] SelectionPool = DataStructures.EventTypes;
+    EventTypeBox(String Name){super(Name);}
+    @Override
+    public void start(Menu Prev)
+    {
+        view();
+        GetInput();
+    }
 
+}
+class VenueTypeBox extends EventTypeBox
+{
+    String[] SelectionPool = DataStructures.VenueTypes;
+    VenueTypeBox(String Name){super(Name);}
+    public void start(Menu Prev)
+    {
+        view();
+        GetInput();
+    }
+}
+class VenuseBox extends Menu
+{
+    VenuseBox(String Name){super(Name);}
+    @Override
+    public void start(Menu Prev)
+    {
+        view();
+        GetInput();
+    }
+}
 class AddEvent extends Menu
 {
+    String Name, Type;
+    MyDate StartingDate, EndDate;
+    Time time;
+    Venue venue;
     AddEvent()
     {
         super("Add Event");
-        SelectionPool = new Menu[]{new NameBox("Event Name"), new DateInterval("Start/End Date"), new TimeBox("Time") new NameBox(Venue)};
+        SelectionPool = new Menu[]{new NameBox("Event Name"), new DateInterval("Start/End Date"), new TimeBox("Time"), new EventTypeBox("Event Category")};
     }
 
     @Override
