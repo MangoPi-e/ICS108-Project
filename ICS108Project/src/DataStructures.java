@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class DataStructures
 {
     public static final String[] EventTypes = {
@@ -23,14 +25,8 @@ class Event {
     private Venue venue;
     private Department department;
 
-    public Event(
-            String name,
-            DateTime start,
-            DateTime end,
-            int typeIndex,
-            Venue venue,
-            Department department
-    ) {
+    public Event(String name, DateTime start, DateTime end, int typeIndex, Venue venue, Department department)
+    {
         this.name = name;
         this.start = start;
         this.end = end;
@@ -162,6 +158,25 @@ class DateTime implements Comparable<DateTime> {//to make comparing start and en
     public void setDate(MyDate date) {this.date = date;}
     public void setTime(MyTime time) {this.time = time;}
 
+    public static String DateTimeToStr(DateTime dateTime)//Str here is short for string
+    {
+        return dateTime.getDate().get_day() + "/" + dateTime.getDate().get_month() + "/" + dateTime.getDate().get_year() + "-" + dateTime.getTime().get_hours() + ":" + dateTime.getTime().get_minutes();
+    }
+
+    public static DateTime StrToDateTime(String text)//Also here Str is short for string :P
+    {
+        String[] mainParts = text.split("-");
+        String[] dateParts = mainParts[0].split("/");
+        String[] timeParts = mainParts[1].split(":");
+        int day = Integer.parseInt(dateParts[0]);
+        int month = Integer.parseInt(dateParts[1]);
+        int year = Integer.parseInt(dateParts[2]);
+
+        int hours = Integer.parseInt(timeParts[0]);
+        int minutes = Integer.parseInt(timeParts[1]);
+
+        return new DateTime(new MyDate(day, month, year), new MyTime(hours, minutes));
+    }
 
     @Override
     public int compareTo(DateTime other) {
@@ -237,6 +252,41 @@ class Venue {
         this.maxCapacity = maxCapacity;
     }
 
+    public static Venue find_venue_by_name(String name, ArrayList<Venue> venues)
+    {
+        for (Venue v : venues)
+        {
+            if (v.get_name().equalsIgnoreCase(name))
+            {
+                return v;
+            }
+        }
+        return null;
+    }
+
+    public static int get_venue_type_index(String type) {
+        for (int i = 0; i < DataStructures.VenueTypes.length; i++)
+        {
+            if (DataStructures.VenueTypes[i].equalsIgnoreCase(type))
+            {
+                return i;
+            }
+        }
+        return 0;
+    }
+
+    public static int get_event_type_index(String type)
+    {
+        for (int i = 0; i < DataStructures.EventTypes.length; i++)
+        {
+            if (DataStructures.EventTypes[i].equalsIgnoreCase(type))
+            {
+                return i;
+            }
+        }
+
+        return 0;
+    }
 
     @Override
     public String toString() {

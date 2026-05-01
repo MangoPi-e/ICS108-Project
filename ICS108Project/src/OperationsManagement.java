@@ -1,5 +1,10 @@
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.io.PrintWriter;
+
 
 public class OperationsManagement
 {
@@ -27,7 +32,7 @@ public class OperationsManagement
         }
 
 
-        System.out.println("\n--- Available Venues ---");
+        System.out.println("\n=== Available Venues ===");
         for (int i = 0; i < venues.size(); i++)
         {
             System.out.println(i + " : " + venues.get(i));
@@ -117,5 +122,78 @@ public class OperationsManagement
         for (int i = 0; i < venues.size(); i++) {
             System.out.println(i + " : " + venues.get(i));
         }
+    }
+
+    public void save_data(String FileName)
+    {
+        try {
+            FileOutputStream fos = new FileOutputStream(FileName);
+            PrintWriter writer = new PrintWriter(fos);
+
+            writer.println("===Venues===");
+            for (Venue v : venues)
+            {
+                writer.println(v.get_name() + "@@" + Venue.get_venue_type_index(v.get_type()) + "@@" + v.get_max_capacity());
+            }
+            writer.println("===Events===");
+            for (Event e : events)
+            {
+                writer.println(e.get_name() + "@@" + Venue.get_event_type_index(e.get_type()) + "@@" + DateTime.DateTimeToStr(e.get_start()) + "@@" + DateTime.DateTimeToStr(e.get_end()) + "@@" + e.get_venue().get_name() + "@@" + e.get_department().get_name() + "@@" + e.get_department().get_responsible_person());
+            }
+            writer.close();
+
+            System.out.println("Data saved successfully to " + FileName +" !!");
+        } catch (Exception e) {
+            System.out.println("Failed to load data!! :\n\t"+e);
+        }
+    }
+    public void load_data(String FileName)
+    {
+        try
+        {
+            FileInputStream fis = new FileInputStream(FileName);
+            Scanner saver = new Scanner(fis);
+            boolean Flag = true;//if the flag is true the code reads saved events otherwise it reads venues
+            while(saver.hasNext())
+            {
+                String line = saver.nextLine();
+                if(line.equals("===Venues===")){Flag=false;}
+                else if(line.equals("===Events===")){Flag=true;}
+                else {
+                    if (line.trim().isEmpty()) {
+                        continue;
+                    }
+
+                    String[] parts = line.split("@@");
+                    if (Flag)
+                    {
+                        String name = parts[0];
+                        int typeIndex = Integer.parseInt(parts[1]);
+                        int maxCapacity = Integer.parseInt(parts[2]);
+
+                        venues.add(new Venue(name, typeIndex, maxCapacity));
+                    }
+                    else
+                    {
+                        String name = parts[0];
+                        int typeIndex = Integer.parseInt(parts[1]);
+
+                        DateTime start = DateTime.StrToDateTime(parts[2]);
+                        DateTime end = DateTime.StrToDateTime(parts[3]);
+
+                        String venueName = parts[4];
+                        String departmentName = parts[5];
+                        String responsiblePerson = parts[6];
+
+                        Venue venue = Venue.find_venue_by_name(venueName, venues);
+                        Department department = new Department(departmentName, responsiblePerson);
+
+                        events.add(new Event(name, start, end, typeIndex, venue, department));
+                    }
+                }
+                saver.close();
+                System.out.println("Data loaded successfully.");
+            }
+        }catch (IOException e){System.out.println("Failed to load data!! :\n\t"+e);}
     }
 }

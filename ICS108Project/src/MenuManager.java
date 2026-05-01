@@ -123,11 +123,14 @@ class MainMenu extends Menu {
     public MainMenu(OperationsManagement operations, Scanner reader) {
         super("Main Menu", reader);
 
-        tasks = new Task[] {
+        tasks = new Task[]
+        {
                 new AddEventTask(operations, reader),
                 new ViewEventsTask(operations),
                 new AddVenueTask(operations, reader),
-                new ViewVenuesTask(operations)
+                new ViewVenuesTask(operations),
+                new SaveDataTask(operations, reader),
+                new LoadDataTask(operations, reader)
         };
     }
 }
@@ -362,18 +365,9 @@ class AddEventTask extends ConfirmableTask {
     }
 
     @Override
-    protected void on_confirmed() {
-        operations.add_event(
-                name,
-                startDate,
-                startTime,
-                endDate,
-                endTime,
-                eventTypeIndex,
-                venue,
-                departmentName,
-                responsiblePerson
-        );
+    protected void on_confirmed()
+    {
+        operations.add_event(name, startDate, startTime, endDate, endTime, eventTypeIndex, venue, departmentName, responsiblePerson);
     }
 }
 
@@ -447,5 +441,53 @@ class ViewVenuesTask implements Task {
     @Override
     public void execute() {
         operations.view_venues();
+    }
+}
+
+class SaveDataTask extends ConfirmableTask {
+    String FileName;
+    public SaveDataTask(OperationsManagement operations, Scanner reader) {
+        super(operations, reader);
+    }
+
+    @Override
+    public String get_name() {
+        return "Save Data";
+    }
+
+    @Override
+    protected boolean run_task()
+    {
+        FileName = new NameInputBox(reader, "File name").get_input();
+        return true;
+    }
+
+    @Override
+    protected void on_confirmed() {
+        operations.save_data(FileName);
+    }
+}
+
+class LoadDataTask extends ConfirmableTask {
+    String FileName;
+    public LoadDataTask(OperationsManagement operations, Scanner reader) {
+        super(operations, reader);
+    }
+
+    @Override
+    public String get_name() {
+        return "Load Data";
+    }
+
+    @Override
+    protected boolean run_task()
+    {
+        FileName = new NameInputBox(reader, "File name").get_input();
+        return true;
+    }
+
+    @Override
+    protected void on_confirmed() {
+        operations.load_data(FileName);
     }
 }
