@@ -16,11 +16,11 @@ public class MenuManager
     }
 }
 
+//Tasks base
 interface Task {
     String get_name();
     void execute();
 }
-
 abstract class ConfirmableTask implements Task {
     protected OperationsManagement operations;
     protected Scanner reader;
@@ -65,6 +65,8 @@ abstract class ConfirmableTask implements Task {
     }
 }
 
+
+//The main menu implementation
 abstract class Menu {
     protected String menuName;
     protected Task[] tasks;
@@ -118,7 +120,6 @@ abstract class Menu {
         }
     }
 }
-
 class MainMenu extends Menu {
     public MainMenu(OperationsManagement operations, Scanner reader) {
         super("Main Menu", reader);
@@ -135,6 +136,8 @@ class MainMenu extends Menu {
     }
 }
 
+
+//Input boxes and some validation
 abstract class InputBox<T> {
     protected Scanner reader;
     protected String label;
@@ -311,6 +314,8 @@ class CapacityInputBox extends InputBox<Integer> {
     }
 }
 
+
+//adding
 class AddEventTask extends ConfirmableTask {
     private String name;
     private MyDate startDate;
@@ -408,6 +413,8 @@ class AddVenueTask extends ConfirmableTask {
     }
 }
 
+
+//view data
 class ViewEventsTask implements Task {
     private OperationsManagement operations;
 
@@ -444,6 +451,8 @@ class ViewVenuesTask implements Task {
     }
 }
 
+
+//save and load
 class SaveDataTask extends ConfirmableTask {
     String FileName;
     public SaveDataTask(OperationsManagement operations, Scanner reader) {

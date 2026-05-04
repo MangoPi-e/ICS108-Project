@@ -8,6 +8,8 @@ import java.io.PrintWriter;
 
 public class OperationsManagement
 {
+
+    //storage
     private ArrayList<Event> events;
     private ArrayList<Venue> venues;
 
@@ -16,13 +18,14 @@ public class OperationsManagement
         venues = new ArrayList<Venue>();
     }
 
+
+    //adding
     public void add_venue(String name, int venueTypeIndex, int maxCapacity) {
         Venue venue = new Venue(name, venueTypeIndex, maxCapacity);
         venues.add(venue);
 
         System.out.println("Venue added successfully.");
     }
-
 
     public Venue select_venue(Scanner reader) {
         if (venues.isEmpty())
@@ -81,6 +84,7 @@ public class OperationsManagement
         System.out.println("Event added successfully.");
     }
 
+    //Extra Validation
     private boolean is_start_before_end(DateTime start, DateTime end) {
         return start.compareTo(end) < 0;
     }
@@ -97,6 +101,8 @@ public class OperationsManagement
         return false;
     }
 
+
+    //VEIW data
     public void view_events() {
         if (events.isEmpty()) {
             System.out.println("No events available.");
@@ -124,6 +130,9 @@ public class OperationsManagement
         }
     }
 
+
+
+    // save and load
     public void save_data(String FileName)
     {
         try {
