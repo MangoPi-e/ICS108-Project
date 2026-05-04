@@ -15,7 +15,6 @@ public class DataStructures {
     };
 }
 
-
 class Event {
     private String name;
     private String type;
@@ -58,7 +57,6 @@ class Event {
                 "\n----------------------";
     }
 }
-
 
 class MyDate implements Comparable<MyDate> {
     private int day, month, year, value;
