@@ -127,7 +127,7 @@ public class OperationsManagement
     public void save_data(String FileName)
     {
         try {
-            FileOutputStream fos = new FileOutputStream(FileName);
+            FileOutputStream fos = new FileOutputStream(FileName+".txt");
             PrintWriter writer = new PrintWriter(fos);
 
             writer.println("===Venues===");
@@ -141,7 +141,7 @@ public class OperationsManagement
                 writer.println(e.get_name() + "@@" + Venue.get_event_type_index(e.get_type()) + "@@" + DateTime.DateTimeToStr(e.get_start()) + "@@" + DateTime.DateTimeToStr(e.get_end()) + "@@" + e.get_venue().get_name() + "@@" + e.get_department().get_name() + "@@" + e.get_department().get_responsible_person());
             }
             writer.close();
-
+            fos.close();
             System.out.println("Data saved successfully to " + FileName +" !!");
         } catch (Exception e) {
             System.out.println("Failed to load data!! :\n\t"+e);
@@ -151,21 +151,22 @@ public class OperationsManagement
     {
         try
         {
-            FileInputStream fis = new FileInputStream(FileName);
+            FileInputStream fis = new FileInputStream(FileName+".txt");
             Scanner saver = new Scanner(fis);
             boolean Flag = true;//if the flag is true the code reads saved events otherwise it reads venues
-            while(saver.hasNext())
-            {
+            while(saver.hasNext()) {
                 String line = saver.nextLine();
-                if(line.equals("===Venues===")){Flag=false;}
-                else if(line.equals("===Events===")){Flag=true;}
-                else {
+                if (line.equals("===Venues===")) {
+                    Flag = false;
+                } else if (line.equals("===Events===")) {
+                    Flag = true;
+                } else {
                     if (line.trim().isEmpty()) {
                         continue;
                     }
-
                     String[] parts = line.split("@@");
-                    if (Flag)
+
+                    if (!Flag)
                     {
                         String name = parts[0];
                         int typeIndex = Integer.parseInt(parts[1]);
@@ -190,10 +191,12 @@ public class OperationsManagement
 
                         events.add(new Event(name, start, end, typeIndex, venue, department));
                     }
+
                 }
-                saver.close();
-                System.out.println("Data loaded successfully.");
             }
+            saver.close();
+            fis.close();
+            System.out.println("Data loaded successfully.");
         }catch (IOException e){System.out.println("Failed to load data!! :\n\t"+e);}
     }
 }

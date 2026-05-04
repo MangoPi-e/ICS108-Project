@@ -1,7 +1,6 @@
 import java.util.ArrayList;
 
-public class DataStructures
-{
+public class DataStructures {
     public static final String[] EventTypes = {
             "Sports",
             "Social",
